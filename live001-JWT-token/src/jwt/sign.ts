@@ -1,4 +1,4 @@
-import { createHmac } from "crypto";
+import { genearateSignature } from "./generateSignature";
 
 interface ISignOptions {
   data: Record<string, any>;
@@ -26,11 +26,11 @@ export function sign({ data, exp, secret }: ISignOptions) {
     "base64url"
   );
 
-  const hmac = createHmac("sha256", secret);
-
-  const signature = hmac
-    .update(`${base64EncodedHeader}.${base64EncodedPayload}`)
-    .digest("base64url");
+  const signature = genearateSignature({
+    header: base64EncodedHeader,
+    payload: base64EncodedPayload,
+    secret,
+  });
 
   return `${base64EncodedHeader}.${base64EncodedPayload}.${signature}`;
 }
