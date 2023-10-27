@@ -1,0 +1,3 @@
+[submodule "live002-base"]
+	path = live002-base
+	url = https://github.com/jstack-content/live002-base
