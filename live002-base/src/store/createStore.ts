@@ -1,8 +1,7 @@
 type SetterFn<T> = (prevState: T) => Partial<T>;
 
-export function createStore<TState>(initialState: TState) {
-  let state = initialState;
-
+export function createStore<TState>(createState: () => TState) {
+  let state = createState();
   const listeners = new Set<() => void>();
 
   function notifyListeners() {
@@ -40,11 +39,11 @@ export function createStore<TState>(initialState: TState) {
   };
 }
 
-const store = createStore({
+const store = createStore(() => ({
   userName: '',
   active: false,
   counter: 1,
-});
+}));
 
 store.subscribe(() => {
   console.log(store.getState());
